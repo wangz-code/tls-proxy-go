@@ -17,8 +17,13 @@
 -   server 是服务端运行在 vps 上
 -   test.xyz.crt 和 test.xyz.key 是 tls 证书, 随便在那个域名厂商申请或者 acme 免费的域名证书
 
-目前如果程序内写死了 域名信息含 baidu 就走直连 ,如果是 google 就走代理, 应该仅支持 https 没试过 http
-没有释放连接,不确定会不会有问题
+目前如果程序内写死了 域名信息含 baidu 就走直连 ,如果是 google 就走代理,
+
+-   应该仅支持 https 没试过 http
+-   没有释放连接,不确定会不会有问题
+-   没有缓存,
+-   没有 id 效验
+
 ## 运行
 
 ```sh
@@ -31,3 +36,9 @@ go run main.go
 ```sh
 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o go-proxy-server -trimpath -ldflags "-s -w -buildid=" main.go
 ```
+
+## 手机测试
+<p align="center">
+    <img alt="VbenAdmin Logo" width="49%" src="https://raw.githubusercontent.com/WangSunio/img/refs/heads/main/images/google.jpeg">
+    <img alt="VbenAdmin Logo" width="49%" src="https://raw.githubusercontent.com/WangSunio/img/refs/heads/main/images/baidu.jpeg">
+</p>
