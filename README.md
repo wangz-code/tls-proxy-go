@@ -1,6 +1,6 @@
 # tls-proxy-go
 
-基于 golang 最简单的请求代理, 根据域名分流, 没有任何加密或者验证纯裸奔, 仅供测试用
+基于 golang 最简单的请求代理, 根据域名分流 仅供测试 TLS 用
 
 ## tls 连接信息
 
@@ -16,13 +16,10 @@
 -   client 客户端运行在本机或软路由或路由器内
 -   server 是服务端运行在 vps 上
 -   test.xyz.crt 和 test.xyz.key 是 tls 证书, 随便在那个域名厂商申请或者 acme 免费的域名证书
-
-目前如果程序内写死了 域名信息含 baidu 就走直连 ,如果是 google 就走代理,
-
--   应该仅支持 https 没试过 http
--   没有释放连接,不确定会不会有问题
--   没有缓存,
--   没有 id 效验
+-   仅支持 regexp: 和 \*.xxx 配置域名 放在 domain.json 中
+-   应该仅支持 https
+-   没有缓存,浏览器测试还是挺快的,
+-   检测到路由含有"/" 返回 index.html 如果"/\*" 则返回 404
 
 ## 运行
 
@@ -31,14 +28,19 @@ go run main.go
 
 ```
 
-## 编译至 linux
+## 编译
 
 ```sh
+# linux server  ≈ 3.7M
 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o go-proxy-server -trimpath -ldflags "-s -w -buildid=" main.go
+
+# client  ≈ 4.1M
+go build -o go-proxy-client -trimpath -ldflags "-s -w -buildid=" main.go
+
 ```
 
 ## 手机测试
-<p align="center">
-    <img alt="VbenAdmin Logo" width="49%" src="https://raw.githubusercontent.com/WangSunio/img/refs/heads/main/images/google.jpeg">
-    <img alt="VbenAdmin Logo" width="49%" src="https://raw.githubusercontent.com/WangSunio/img/refs/heads/main/images/baidu.jpeg">
+
+<p align="left">
+    <img alt="demo" width="49%" src="https://raw.githubusercontent.com/wangz-code/tls-proxy-go/main/demo.gif">
 </p>
