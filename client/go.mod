@@ -1,3 +1,3 @@
-module tls-proxy
+module tls-proxy-client
 
 go 1.21.3
